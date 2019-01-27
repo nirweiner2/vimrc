@@ -17,12 +17,15 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 
-Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdtree'
 Plugin 'morhetz/gruvbox'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'valloric/listtoggle'
+
+" Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'mg979/vim-visual-multi'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -30,7 +33,7 @@ filetype plugin indent on    " required
 set number  " Show line numbers
 set linebreak   " Break lines at word (requires Wrap lines)
 set showbreak=+++   " Wrap-broken line prefix
-set textwidth=80   " Line wrap (number of cols)
+"set textwidth=80   " Line wrap (number of cols)
 set showmatch   " Highlight matching brace
 set errorbells
 "set visualbell  " Use visual bell (no beeping)
@@ -54,10 +57,10 @@ set laststatus=2
 set ruler   " Show row and column ruler information
 set wildmenu
 set number
-set relativenumber
-set cursorline
+" set relativenumber
+" set cursorline
 set title
-set listchars=space:·
+" set listchars=space:·
  
 set undolevels=1000 " Number of undo levels
 set backspace=indent,eol,start  " Backspace behaviour
@@ -87,8 +90,8 @@ let g:lt_location_list_toggle_map = '<leader>`'
 :nnoremap <leader>n :cn<CR>
 :nnoremap <leader>p :cp<CR>
 
-":nnoremap <C-g> :cs find g<Space><C-r><C-W>
-":nnoremap <leader>g :Gg<Space><C-r><C-W>
+:nnoremap <C-g> :cs find g<Space><C-r><C-W>
+:nnoremap <leader>g :Gg<Space><C-r><C-W>
 
 " let g:rg_command = '
 "   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
@@ -143,7 +146,7 @@ colorscheme gruvbox
 set clipboard=exclude:.*
 
 " Show characters exceeding column 80
-:au BufWinEnter *.c,*.h let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+" :au BufWinEnter *.c,*.h let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
 " GitGutter
 set updatetime=300
@@ -190,3 +193,5 @@ function! DeleteInactiveBufs()
 endfunction
 command! Bdi :call DeleteInactiveBufs()
 
+" Git long lines
+au FileType gitcommit set tw=72
