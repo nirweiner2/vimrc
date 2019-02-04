@@ -17,15 +17,19 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 
-" Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdtree'
 Plugin 'morhetz/gruvbox'
-Plugin 'ludovicchabant/vim-gutentags'
+" Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'valloric/listtoggle'
 
 " Plugin 'dhruvasagar/vim-table-mode'
-Plugin 'mg979/vim-visual-multi'
+" Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'mg979/vim-visual-multi'
+
+Plugin 'christoomey/vim-tmux-navigator'
+" Plugin 'tmux-plugins/vim-tmux-focus-events'
+" Plugin 'roxma/vim-tmux-clipboard'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -143,7 +147,8 @@ set background=dark
 colorscheme gruvbox
 
 " Do not try connecting to the X server
-set clipboard=exclude:.*
+" set clipboard=exclude:.*
+set clipboard=unnamedplus
 
 " Show characters exceeding column 80
 " :au BufWinEnter *.c,*.h let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
@@ -151,47 +156,49 @@ set clipboard=exclude:.*
 " GitGutter
 set updatetime=300
 
-nnoremap <Tab> >>_
-nnoremap <S-Tab> <<_
-inoremap <S-Tab> <C-d>
-vnoremap <Tab> >gv
-vnoremap <S-Tab> <gv
-nnoremap <C-I> <Tab>
+" nnoremap <Tab> >>_
+" nnoremap <S-Tab> <<_
+" inoremap <S-Tab> <C-d>
+" vnoremap <Tab> >gv
+" vnoremap <S-Tab> <gv
+" nnoremap <C-I> <Tab>
 
-vnoremap <silent> ,y y:new<CR>:call setline(0,getregtype())<CR>o<Esc>P:wq!~/reg.txt<CR>
-nnoremap <silent> ,y :new<CR>:call setline(1,getregtype())<CR>o<Esc>P:wq!~/reg.txt<CR>
-noremap <silent> ,p :sview ~/reg.txt<CR>"zdddG:q!<CR>:call setreg('"', @",@z)<CR>p
-noremap <silent> ,P :sview ~/reg.txt<CR>"zdddG:q!<CR>:call setreg('"', @",@z)<CR>P
+" vnoremap <silent> ,y y:new<CR>:call setline(0,getregtype())<CR>o<Esc>P:wq!~/reg.txt<CR>
+" nnoremap <silent> ,y :new<CR>:call setline(1,getregtype())<CR>o<Esc>P:wq!~/reg.txt<CR>
+" noremap <silent> ,p :sview ~/reg.txt<CR>"zdddG:q!<CR>:call setreg('"', @",@z)<CR>p
+" noremap <silent> ,P :sview ~/reg.txt<CR>"zdddG:q!<CR>:call setreg('"', @",@z)<CR>P
 
-let g:multi_cursor_exit_from_insert_mode = 0
-:autocmd ColorScheme * runtime autoload/multiple_cursors.vim
-:autocmd ColorScheme * hi multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
+" let g:multi_cursor_exit_from_insert_mode = 0
+" :autocmd ColorScheme * runtime autoload/multiple_cursors.vim
+" :autocmd ColorScheme * hi multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
 
 
 " nnoremap <C-@> :NERDTreeToggle<CR>
 
-let g:autotagTagsFile="tags"
+" let g:autotagTagsFile="tags"
 
-function! DeleteInactiveBufs()
-    "From tabpagebuflist() help, get a list of all buffers in all tabs
-    let tablist = []
-    for i in range(tabpagenr('$'))
-        call extend(tablist, tabpagebuflist(i + 1))
-    endfor
+"function! DeleteInactiveBufs()
+"    "From tabpagebuflist() help, get a list of all buffers in all tabs
+"    let tablist = []
+"    for i in range(tabpagenr('$'))
+"        call extend(tablist, tabpagebuflist(i + 1))
+"    endfor
 
-    "Below originally inspired by Hara Krishna Dara and Keith Roberts
-    "http://tech.groups.yahoo.com/group/vim/message/56425
-    let nWipeouts = 0
-    for i in range(1, bufnr('$'))
-        if bufexists(i) && !getbufvar(i,"&mod") && index(tablist, i) == -1
-        "bufno exists AND isn't modified AND isn't in the list of buffers open in windows and tabs
-            silent exec 'bwipeout' i
-            let nWipeouts = nWipeouts + 1
-        endif
-    endfor
-    echomsg nWipeouts . ' buffer(s) wiped out'
-endfunction
-command! Bdi :call DeleteInactiveBufs()
+"    "Below originally inspired by Hara Krishna Dara and Keith Roberts
+"    "http://tech.groups.yahoo.com/group/vim/message/56425
+"    let nWipeouts = 0
+"    for i in range(1, bufnr('$'))
+"        if bufexists(i) && !getbufvar(i,"&mod") && index(tablist, i) == -1
+"        "bufno exists AND isn't modified AND isn't in the list of buffers open in windows and tabs
+"            silent exec 'bwipeout' i
+"            let nWipeouts = nWipeouts + 1
+"        endif
+"    endfor
+"    echomsg nWipeouts . ' buffer(s) wiped out'
+"endfunction
+"command! Bdi :call DeleteInactiveBufs()
 
 " Git long lines
 au FileType gitcommit set tw=72
+
+" vnoremap <C-c> :w !xclip -i -sel c<CR><CR> 

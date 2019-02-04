@@ -1,0 +1,38 @@
+
+
+[nir]
+    nir = Nir Weiner
+[user]
+    email = nir.weiner@oracle.com
+    name = Nir Weiner
+[alias]
+    ci = commit
+    lc = log
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    dc = diff --cached
+    #lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%cn%Creset' --abbrev-commit --date=relative
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset' --abbrev-commit --date=relative
+    who = shortlog -s --
+[color]
+    ui = auto
+[push]
+    default = simple
+[core]
+    editor = vim
+	abbrev = 12
+[pretty]
+	fixes = Fixes: %h (\"%s\")
+[grep]
+    lineNumber = true
+    color = auto
+[sendemail]
+    smtpserver = stbeehive.oracle.com
+    smtpserverport = 465
+    smtpencryption = ssl
+    smtpuser = nir.weiner@oracle.com
+    smtppass = MY_PASS
+    confirm = always
